@@ -1,0 +1,19 @@
+# config context path to "/" by setting an empty string
+
+# JACKSON
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/esort
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate: 
+      ddl-auto: create
+      naming: 
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        
+
+
+  
