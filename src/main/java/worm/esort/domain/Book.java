@@ -45,7 +45,13 @@ public class Book {
 	/**
 	 * 评分人数
 	 */
-	private Integer rating;
+	private Integer ratingCount;
+	public Integer getRatingCount() {
+		return ratingCount;
+	}
+	public void setRatingCount(Integer ratingCount) {
+		this.ratingCount = ratingCount;
+	}
 	/**
 	 * 平均评分
 	 */
@@ -96,12 +102,6 @@ public class Book {
 	public void setFavourited(Integer favourited) {
 		this.favourited = favourited;
 	}
-	public Integer getRating() {
-		return rating;
-	}
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
 	public Float getAverageRating() {
 		return averageRating;
 	}
@@ -113,6 +113,12 @@ public class Book {
 	}
 	public void setHref(String href) {
 		this.href = href;
+	}
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", eInputDate=" + eInputDate + ", eInputTime=" + eInputTime + ", fileSize=" + fileSize
+				+ ", length=" + length + ", name=" + name + ", favourited=" + favourited + ", ratingCount="
+				+ ratingCount + ", averageRating=" + averageRating + ", href=" + href + "]";
 	}
 	
 	

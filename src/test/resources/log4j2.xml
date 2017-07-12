@@ -6,7 +6,7 @@
     </Console>
   </Appenders>
   <Loggers>
-    <Logger name="worm.esort" level="trace"  additivity="false">
+    <Logger name="worm.esort" level="debug"  additivity="false">
       <AppenderRef ref="Console"/>
     </Logger>
     <Root level="error">
