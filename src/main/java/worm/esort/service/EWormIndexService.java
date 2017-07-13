@@ -42,8 +42,10 @@ public class EWormIndexService {
 		Elements pageLinks = page1.select("table.ptb td[onclick] > a"); //获取所有页码链接
 		int pageCount = new Integer(pageLinks.get(pageLinks.size()-2).html());// 总页数
 		for(int i=1; i<=pageCount-1; i++) { 
+			logger.info("正在处理第 {} 页",i+1);
 			String pageUrl = new String(searchResultUrl +  "&page=" + i);  // i=1开始，表示从第二页开始循环
 			crawlListPage(pageUrl);
+			logger.info("当前进度{}/{}",i+1,pageCount);
 		}
 		long t2 = System.currentTimeMillis();
 		logger.info("总耗时："+(t2-t1)/1000+"秒");
@@ -65,8 +67,8 @@ public class EWormIndexService {
 		for(Element link : links){
 			logger.info("开始处理："+link.html());
 			Book book = new Book();
-			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失
-			crawlBook(link.attr("href"),book);
+			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失;
+			crawlBook(link.attr("href")+"?nw=session",book);//某些本子被举报为offensive的话，需要加上"?nw=session"参数才能正常访问，为了处理方便，统一加上"?nw=session"参数；
 		}
 	}
 	/**
