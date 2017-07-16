@@ -48,5 +48,10 @@ public class EWormIndexServiceTest {
 		eWormIndexService.crawlBook("https://e-hentai.org/g/1085933/4d70973893/?nw=session", b);
 		logger.debug(b);
 	}
+	
+	@Test 
+	public void testPrint2Excel() {
+		eWormIndexService.print2Excel("esort");
+	}
 
 }
