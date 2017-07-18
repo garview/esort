@@ -1,8 +1,11 @@
 package worm.esort.service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +15,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -100,6 +106,10 @@ public class EWormIndexService {
 		book.setName(doc.select("#gn").html());
 		logger.debug("番号:"+doc.select("#gn").html());// 番号
 		Elements values = doc.select("#gdd .gdt2");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+		DateTime dt = fmt.parseDateTime(values.get(0).html());
+		book.seteInputDate(new Date(dt.getMillis()));
+		book.seteInputTime(new Time(dt.getMillis()));
 		logger.debug("录入时间:"+values.get(0).html());
 		book.setFileSize(values.get(4).html());
 		logger.debug("大小:"+values.get(4).html());
@@ -117,7 +127,7 @@ public class EWormIndexService {
 	 * 把爬取结果输出到excel
 	 * @param filename or filepath
 	 */
-	public void print2Excel(String filename) {
+	public void print2Excel(File file) {
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("esort");
@@ -141,7 +151,7 @@ public class EWormIndexService {
         	row.createCell(5).setCellValue(b.geteInputDate());
         }
         try {
-            FileOutputStream outputStream = new FileOutputStream(filename);
+            FileOutputStream outputStream = new FileOutputStream(file);
             workbook.write(outputStream);
             workbook.close();
         } catch (FileNotFoundException e) {

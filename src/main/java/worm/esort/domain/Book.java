@@ -1,6 +1,7 @@
 package worm.esort.domain;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Book {
 	/**
 	 * e站入库时间
 	 */
-	private Date eInputTime;
+	private Time eInputTime;
 	
 	/**
 	 * book所有图片总大小
@@ -72,10 +73,10 @@ public class Book {
 	public void seteInputDate(Date eInputDate) {
 		this.eInputDate = eInputDate;
 	}
-	public Date geteInputTime() {
+	public Time geteInputTime() {
 		return eInputTime;
 	}
-	public void seteInputTime(Date eInputTime) {
+	public void seteInputTime(Time eInputTime) {
 		this.eInputTime = eInputTime;
 	}
 	public String getFileSize() {

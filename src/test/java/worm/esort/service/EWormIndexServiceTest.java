@@ -1,5 +1,6 @@
 package worm.esort.service;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,7 +53,11 @@ public class EWormIndexServiceTest {
 	
 	@Test 
 	public void testPrint2Excel() {
-		eWormIndexService.print2Excel("esort.xlsx");
+		File outFolder = new File("out");
+		if(!outFolder.exists())
+			outFolder.mkdirs();
+		File file = new File(outFolder,"esort-{date}.xlsx".replace("{date}", new DateTime().toString("yyyyMMdd")));
+		eWormIndexService.print2Excel(file);
 	}
 
 }
