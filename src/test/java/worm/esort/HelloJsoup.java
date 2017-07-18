@@ -1,8 +1,10 @@
 package worm.esort;
 
 import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Connection.Request;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,20 +25,12 @@ public class HelloJsoup {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		long t1 = System.currentTimeMillis();
 		String originUrl = "https://e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=1&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=chinese&f_apply=Apply+Filter";
-		Document page1 = Jsoup.connect(originUrl).get();
-		handlePage(page1);// 先处理第一页
-		Elements pageLinks = page1.select("table.ptb td[onclick] > a"); //获取所有页码链接
-		int pageCount = new Integer(pageLinks.get(pageLinks.size()-2).html());// 总页数
-		for(int i=1; i<=pageCount-1; i++) { 
-			String url = new String(originUrl +  "&page=" + i);  // i=1开始，表示从第二页开始循环
-			Document page = Jsoup.connect(url).get();
-			handlePage(page);
-		}
-//		getRecordInfo("https://e-hentai.org/g/1085017/9516cdd930/"); 404的处理
-		long t2 = System.currentTimeMillis();
-		logger.info("总耗时："+(t2-t1)/1000+"秒");
+		Request request = Jsoup.connect(originUrl).request();
+		
+		System.out.println(request.headers());
+		System.out.println(request.requestBody());
+		System.out.println(request.data());
 	}
 	static void handlePage(Document doc){
 		long t1 = System.currentTimeMillis();
@@ -71,5 +65,22 @@ public class HelloJsoup {
 		long t2 = System.currentTimeMillis();
 		logger.trace("耗时："+(t2-t1)/1000+"秒");
 		logger.trace("===========================");
+	}
+	
+	static void test1() throws IOException{
+		long t1 = System.currentTimeMillis();
+		String originUrl = "https://e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=1&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=chinese&f_apply=Apply+Filter";
+		Document page1 = Jsoup.connect(originUrl).get();
+		handlePage(page1);// 先处理第一页
+		Elements pageLinks = page1.select("table.ptb td[onclick] > a"); //获取所有页码链接
+		int pageCount = new Integer(pageLinks.get(pageLinks.size()-2).html());// 总页数
+		for(int i=1; i<=pageCount-1; i++) { 
+			String url = new String(originUrl +  "&page=" + i);  // i=1开始，表示从第二页开始循环
+			Document page = Jsoup.connect(url).get();
+			handlePage(page);
+		}
+//		getRecordInfo("https://e-hentai.org/g/1085017/9516cdd930/"); 404的处理
+		long t2 = System.currentTimeMillis();
+		logger.info("总耗时："+(t2-t1)/1000+"秒");
 	}
 }

@@ -24,7 +24,7 @@ public class EWormIndexServiceTest {
 	@Resource(name = "eWormIndexService")
 	EWormIndexService eWormIndexService;
 
-	@Test
+//	@Test
 	public void testCrawlSearchResult() throws IOException {
 		String originUrl = "https://e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=1&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=chinese&f_apply=Apply+Filter";
 		eWormIndexService.crawlSearchResult(originUrl);
@@ -51,7 +51,7 @@ public class EWormIndexServiceTest {
 	
 	@Test 
 	public void testPrint2Excel() {
-		eWormIndexService.print2Excel("esort");
+		eWormIndexService.print2Excel("esort.xlsx");
 	}
 
 }

@@ -68,13 +68,12 @@ public class EWormIndexService {
 		Document doc = Jsoup.connect(url).get();
 		crawlListPage(doc);
 		long t2 = System.currentTimeMillis();
-		logger.info("一页耗时："+(t2-t1)/1000+"秒"); //平均处理1页30s左右
+		logger.info("本页:{}耗时{}秒",url,(t2-t1)/1000f); //平均处理1页30s左右
 		return (t2-t1)/1000f;
 	}
 	public void crawlListPage(Document doc) throws IOException{
 		Elements links = doc.select("a[onmouseover]"); 
 		for(Element link : links){
-			logger.debug("开始处理："+link.html());
 			Book book = new Book();
 			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失;
 			crawlBook(link.attr("href")+"?nw=session",book);//某些本子被举报为offensive的话，需要加上"?nw=session"参数才能正常访问，为了处理方便，统一加上"?nw=session"参数；
@@ -85,7 +84,7 @@ public class EWormIndexService {
 	 * @param url
 	 */
 	public void crawlBook(String url, Book book) {
-		logger.debug("===========================");
+		logger.debug("===========开始处理：{}================",book.getName());
 		long t1 = System.currentTimeMillis();
 		Document doc = null;
 		try {
@@ -109,9 +108,9 @@ public class EWormIndexService {
 		book.setFavourited(str2Integer(values.get(6).html()));
 		logger.debug("收藏数:"+values.get(6).html());
 		long t2 = System.currentTimeMillis();
-		logger.debug("耗时："+(t2-t1)/1000+"秒");
-		logger.debug("===========================");
 		bookResp.save(book);
+		logger.debug("处理 {} 耗时：{}秒",book.getName(),(t2-t1)/1000f);
+		logger.debug("===========================");
 	}
 	
 	/**
@@ -125,9 +124,9 @@ public class EWormIndexService {
         String[] headers = {"番号","页数","评分人数","添加收藏的人数","平均评分","e站入库日期"};
         int rowCount = 0;
         Row row = sheet.createRow(rowCount++);
-        for(String header : headers){
-        	int colCount = 0;
-        	Cell cell = row.createCell(colCount);
+        for(int i = 0; i<headers.length; i++){
+        	String header = headers[i]; 
+        	Cell cell = row.createCell(i);
         	cell.setCellValue(header);
         }
         try {

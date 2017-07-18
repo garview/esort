@@ -1,5 +1,7 @@
 package worm.esort;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -23,7 +25,7 @@ public class App
 {
 	private static final Logger logger = LogManager.getLogger();
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws InterruptedException, IOException  {
 //		ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		ApplicationContext ctx = SpringApplication.run(App.class,args);
 		ThreadPoolTaskExecutor taskExecutor = (ThreadPoolTaskExecutor) ctx.getBean("taskExecutor");
@@ -46,7 +48,7 @@ public class App
 		logger.info("总耗时："+(t2-t1)/1000+"秒");
 		boolean shouldShutdown = false;
 		while(!shouldShutdown){
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 			if(taskExecutor.getActiveCount()==0){
 				taskExecutor.shutdown();
 				shouldShutdown = true;
@@ -58,8 +60,8 @@ public class App
 	@Bean
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(10);
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(5);
 //        executor.setQueueCapacity(1);
         executor.setWaitForTasksToCompleteOnShutdown(true);
         return executor;
