@@ -39,9 +39,7 @@ public class App
 		int pageCount = new Integer(pageLinks.get(pageLinks.size()-2).html());// 总页数
 		for(int i=1; i<=pageCount-1; i++) { 
 			Thread.sleep(1000);
-			logger.info("正在处理第 {} 页",i+1);
-			String pageUrl = new String(searchResultUrl +  "&page=" + i);  // i=1开始，表示从第二页开始循环
-			taskExecutor.execute((WormThread)ctx.getBean("wormThread",pageUrl));
+			taskExecutor.execute((WormThread)ctx.getBean("wormThread",searchResultUrl,i));
 //			logger.info("当前进度{}/{}, 预计剩余{}秒",i+1,pageCount,costTime*(pageCount-1-i));
 		}
 		long t2 = System.currentTimeMillis();

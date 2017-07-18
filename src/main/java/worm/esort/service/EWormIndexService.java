@@ -118,16 +118,27 @@ public class EWormIndexService {
 	 * @param filename or filepath
 	 */
 	public void print2Excel(String filename) {
-//		Iterable<Book> books = bookResp.findAll();
+		
 		XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("esort");
         String[] headers = {"番号","页数","评分人数","添加收藏的人数","平均评分","e站入库日期"};
         int rowCount = 0;
-        Row row = sheet.createRow(rowCount++);
+        Row headerRow = sheet.createRow(rowCount++);
         for(int i = 0; i<headers.length; i++){
         	String header = headers[i]; 
-        	Cell cell = row.createCell(i);
+        	Cell cell = headerRow.createCell(i);
         	cell.setCellValue(header);
+        }
+        // 打印数据内容
+        Iterable<Book> books = bookResp.findAll();
+        for(Book b: books) {
+        	Row row = sheet.createRow(rowCount++);
+        	row.createCell(0).setCellValue(b.getName());
+        	row.createCell(1).setCellValue(b.getLength());
+        	row.createCell(2).setCellValue(b.getRatingCount());
+        	row.createCell(3).setCellValue(b.getFavourited());
+        	row.createCell(4).setCellValue(b.getAverageRating());
+        	row.createCell(5).setCellValue(b.geteInputDate());
         }
         try {
             FileOutputStream outputStream = new FileOutputStream(filename);
@@ -152,5 +163,5 @@ public class EWormIndexService {
 			return 0f;
 		return new Float(intStr);
 	}
-	
+
 }
