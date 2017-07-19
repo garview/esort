@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import worm.esort.App;
 import worm.esort.service.EWormIndexService;
 @Component
 @Scope("prototype")
@@ -34,10 +35,16 @@ public class WormThread extends Thread {
 	@Override
 	public void run() {
 		logger.info("线程：{} 开始处理第{}页——————————",this.getName(),this.pageCount+1);
+		float costTime = 0;
 		try {
-			eWormIndexService.crawlListPage(url);
+			costTime = eWormIndexService.crawlListPage(url);
 		} catch (IOException e) {
 			logger.error("连接异常："+url,e);
+		} finally {
+			synchronized(App.result){
+				App.result.addHandledPage(pageCount+1);
+				App.result.expectRemainTime(costTime);
+			}
 		}
 	}
 	

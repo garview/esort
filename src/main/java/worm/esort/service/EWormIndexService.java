@@ -74,7 +74,7 @@ public class EWormIndexService {
 		Document doc = Jsoup.connect(url).get();
 		crawlListPage(doc);
 		long t2 = System.currentTimeMillis();
-		logger.info("本页:{}耗时{}秒",url,(t2-t1)/1000f); //平均处理1页30s左右
+		logger.info("本页耗时{}秒:{}",(t2-t1)/1000f,url); //平均处理1页30s左右
 		return (t2-t1)/1000f;
 	}
 	public void crawlListPage(Document doc) throws IOException{
@@ -119,7 +119,7 @@ public class EWormIndexService {
 		logger.debug("收藏数:"+values.get(6).html());
 		long t2 = System.currentTimeMillis();
 		bookResp.save(book);
-		logger.debug("处理 {} 耗时：{}秒",book.getName(),(t2-t1)/1000f);
+		logger.debug("处理耗时{}秒：{} ",(t2-t1)/1000f,book.getName());
 		logger.debug("===========================");
 	}
 	
@@ -148,7 +148,7 @@ public class EWormIndexService {
         	row.createCell(2).setCellValue(b.getRatingCount());
         	row.createCell(3).setCellValue(b.getFavourited());
         	row.createCell(4).setCellValue(b.getAverageRating());
-        	row.createCell(5).setCellValue(b.geteInputDate());
+        	row.createCell(5).setCellValue(new DateTime(b.geteInputDate()).toString("yyyy-MM-dd"));
         }
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
