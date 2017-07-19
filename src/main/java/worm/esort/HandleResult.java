@@ -44,7 +44,7 @@ public class HandleResult {
 		int hours = (int) (remainTime / 3600);
 		int minutes = (int) ((remainTime % 3600f) / 60);
 		int seconds = (int) ((remainTime % 3600f) % 60);
-		logger.info("剩余{}小时{}分钟{}秒", hours, minutes, seconds);
+		logger.info("进度：{}/{}, 剩余{}小时{}分钟{}秒", handledPages.size(),totalPageCount,hours, minutes, seconds);
 	}
 
 //	public static void testExpectRemainTime(){

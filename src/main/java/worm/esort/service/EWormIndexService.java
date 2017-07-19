@@ -120,7 +120,6 @@ public class EWormIndexService {
 		long t2 = System.currentTimeMillis();
 		bookResp.save(book);
 		logger.debug("处理耗时{}秒：{} ",(t2-t1)/1000f,book.getName());
-		logger.debug("===========================");
 	}
 	
 	/**
