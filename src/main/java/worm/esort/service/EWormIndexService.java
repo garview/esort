@@ -99,6 +99,7 @@ public class EWormIndexService {
 			logger.error(book.getName()+" 的链接似乎失效了："+url, e);
 			bookResp.save(book);
 		} 
+		book.setHref(url);
 		book.setRatingCount(str2Integer(doc.select("#rating_count").html()));
 		logger.debug("评分人数:"+doc.select("#rating_count").html());// 评分人数
 		book.setAverageRating(str2Float(doc.select("#rating_label").html()));
