@@ -11,12 +11,12 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.common.usermodel.Hyperlink;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFHyperlink;
@@ -164,6 +164,7 @@ public class EWormIndexService {
 			Cell cell = headerRow.createCell(i);
 			cell.setCellValue(header);
 		}
+		sheet.setAutoFilter(CellRangeAddress.valueOf("A1:F1"));
 		// 打印数据内容
 		Iterable<Book> books = bookResp.findAll();
 		for (Book b : books) {
