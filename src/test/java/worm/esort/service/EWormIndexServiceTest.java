@@ -39,13 +39,13 @@ public class EWormIndexServiceTest {
 	// }
 	//
 //	@Test
-	public void testCrawlBook() {
+	public void testCrawlBook() throws IOException {
 		Book b = new Book();
 		eWormIndexService.crawlBook("https://e-hentai.org/g/1086305/4d5acc0a41/?nw=session", b);
 		logger.debug(b);
 	}
 //	@Test
-	public void testCrawlOffensiveBook() {
+	public void testCrawlOffensiveBook() throws IOException {
 		Book b = new Book();
 		eWormIndexService.crawlBook("https://e-hentai.org/g/1085933/4d70973893/?nw=session", b);
 		logger.debug(b);

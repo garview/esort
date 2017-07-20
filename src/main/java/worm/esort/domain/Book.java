@@ -43,6 +43,17 @@ public class Book {
 	 * 添加收藏的人数
 	 */
 	private Integer favourited;
+	
+	/**
+	 * 资源是否可用
+	 */
+	private boolean available = true;
+	public boolean isAvailable() {
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 	/**
 	 * 评分人数
 	 */

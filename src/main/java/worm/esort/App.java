@@ -46,14 +46,6 @@ public class App
 		long t2 = System.currentTimeMillis();
 		logger.info("总耗时："+(t2-t1)/1000+"秒");
 		taskExecutor.shutdown();
-//		boolean shouldShutdown = false;
-//		while(!shouldShutdown){
-//			Thread.sleep(3000);
-//			if(taskExecutor.getActiveCount()==0){
-//				taskExecutor.shutdown();
-//				shouldShutdown = true;
-//			}
-//		}
 		
 	}
 	
