@@ -45,10 +45,11 @@ import worm.esort.repository.BookRepository;
 @Transactional
 public class EWormIndexService {
 
-	private static final Logger logger = LogManager.getLogger(EWormIndexService.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	BookRepository bookResp;
+	
 
 	/**
 	 * 对查询结果所有列表进行爬取 已废弃，单线程爬取效率太低。
@@ -72,6 +73,7 @@ public class EWormIndexService {
 		long t2 = System.currentTimeMillis();
 		logger.info("总耗时：" + (t2 - t1) / 1000 + "秒");
 	}
+	
 
 	/**
 	 * 爬取查询列表某页的信息
@@ -91,6 +93,8 @@ public class EWormIndexService {
 	public void crawlListPage(Document doc) {
 		Elements links = doc.select("a[onmouseover]");
 		for (Element link : links) {
+			if(bookResp.findBookByName(link.html())!=null)
+				continue;
 			Book book = new Book();
 			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失;
 			String url = link.attr("href");
@@ -168,7 +172,7 @@ public class EWormIndexService {
 		// 打印数据内容
 		Iterable<Book> books = bookResp.findAll();
 		for (Book b : books) {
-			if(b.getLength()==null)
+			if (b.getLength() == null)
 				continue;
 			Row row = sheet.createRow(rowCount++);
 			Cell cell = row.createCell(0);

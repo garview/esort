@@ -7,4 +7,6 @@ import worm.esort.domain.Book;
 
 public interface BookRepository extends CrudRepository<Book, Long>{
 
+	public Iterable<Book> findByAvailable(boolean available);
+	public Book findBookByName(String name);
 }
