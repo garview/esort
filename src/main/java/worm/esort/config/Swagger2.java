@@ -12,12 +12,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * @author 程序猿DD
- * @version 1.0.0
- * @date 16/4/18 下午12:02.
- * @blog http://blog.didispace.com
- */
 @Configuration
 //@ComponentScan
 @EnableSwagger2
@@ -35,10 +29,10 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("更多Spring Boot相关文章请关注：http://blog.didispace.com/")
+                .title("E-Sort API")
+                .description("description: http://www.baidu.com")
                 .termsOfServiceUrl("http://blog.didispace.com/")
-                .contact("程序猿DD")
+                .contact("api author")
                 .version("1.0")
                 .build();
     }

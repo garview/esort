@@ -28,13 +28,14 @@ public class ESortController {
 
 	// @RequestMapping("/getBooks")
 	// @ResponseBody
-	@ApiOperation(value = "获取用户列表", notes = "")
+	@ApiOperation(value = "获取用户列表", notes = "获取已经爬取的book信息")
 	@RequestMapping(value = { "/getBooks" }, method = RequestMethod.GET)
 	public String getBooks() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(bookResp.findByAvailable(true));
 	}
-
+	
+	@ApiOperation(value = "爬取book信息", notes = "发出爬取指令，慎用")
 	@RequestMapping(value = { "/collectBooks" }, method = RequestMethod.GET)
 	public ResponseEntity<String> collectBooks() throws IOException {
 		eWormThreadService.collectBooks();
