@@ -62,7 +62,7 @@ public class EWormThreadService {
 	private ApplicationContext ctx;
 
 	
-	@Value("${esort.force-grap}")
+	@Value("${esort.force-grap:false}")
     private Boolean forceGrap;
 	
 	public void collectBooks() throws IOException {
