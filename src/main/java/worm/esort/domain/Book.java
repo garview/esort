@@ -69,6 +69,17 @@ public class Book {
 	private Integer favourited;
 	
 	/**
+	 * 分类
+	 */
+	private String category;
+	
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	/**
 	 * 资源是否可用
 	 */
 	private boolean available = true;

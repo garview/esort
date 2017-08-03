@@ -62,13 +62,7 @@ public class EWormThreadService {
 	private ApplicationContext ctx;
 
 	
-	@Value("${esort.force-grap:false}")
-    private Boolean forceGrap;
-	
 	public void collectBooks() throws IOException {
-		if(forceGrap)
-			bookResp.deleteAll();
-		long t1 = System.currentTimeMillis();
 		String searchResultUrl = "https://e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=1&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=chinese&f_apply=Apply+Filter";
 		Document page1 = Jsoup.connect(searchResultUrl).get();
 		Elements pageLinks = page1.select("table.ptb td[onclick] > a"); // 获取所有页码链接
@@ -79,8 +73,6 @@ public class EWormThreadService {
 		for (int i = 1; i <= totalPageCount - 1; i++) {
 			taskExecutor.execute((WormThread) ctx.getBean("wormThread", searchResultUrl, i));
 		}
-		long t2 = System.currentTimeMillis();
-		logger.info("总耗时：" + (t2 - t1) / 1000 + "秒");
 		taskExecutor.shutdown();
 	}
 

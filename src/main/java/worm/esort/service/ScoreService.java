@@ -47,10 +47,6 @@ public class ScoreService {
 		List<Object[]> result = bookResp.findBookScores(1L);
 		List<BookScore> newResult = new ArrayList<BookScore>();
 		result.stream().forEach(obj->{
-			for(int i=0; i<obj.length; i++){
-				System.out.print("--"+obj[i]);
-			}
-			System.out.println();
 			BookScore bs = new BookScore();
 			bs.setName((String) obj[0]);
 			bs.setLength((Integer)obj[1]);

@@ -16,5 +16,5 @@ spring:
         
 
 esort:
-  force-grap: false
+  force-grap: true
   

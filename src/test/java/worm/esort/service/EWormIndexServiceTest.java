@@ -32,12 +32,16 @@ public class EWormIndexServiceTest {
 		eWormIndexService.crawlSearchResult(originUrl);
 	}
 
-	//
-	// @Test
-	// public void testCrawlListPageString() {
-	// fail("Not yet implemented");
-	// }
-	//
+	
+	 @Test
+	 public void testCrawlListPage() {
+		 try {
+			eWormIndexService.crawlListPage("https://e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=1&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=chinese&f_apply=Apply+Filter");
+		} catch (IOException e) {
+			logger.error(e);
+		}
+	 }
+	
 //	@Test
 	public void testCrawlBook() throws IOException {
 		Book b = new Book();
@@ -51,7 +55,7 @@ public class EWormIndexServiceTest {
 		logger.debug(b);
 	}
 	
-	@Test 
+//	@Test 
 	public void testPrint2Excel() {
 		File outFolder = new File("out");
 		if(!outFolder.exists())

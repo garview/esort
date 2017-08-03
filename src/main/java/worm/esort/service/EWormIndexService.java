@@ -30,6 +30,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import worm.esort.domain.Book;
@@ -89,13 +90,20 @@ public class EWormIndexService {
 		logger.info("本页耗时{}秒:{}", (t2 - t1) / 1000f, url); // 平均处理1页30s左右
 		return (t2 - t1) / 1000f;
 	}
-
+	/**
+	 * forceGrap=true,则全部数据重新获取；否则，跳过已有数据。
+	 */
+	@Value("${esort.force-grap:false}")
+    private Boolean forceGrap;
 	public void crawlListPage(Document doc) {
 		Elements links = doc.select("a[onmouseover]");
 		for (Element link : links) {
-			if(bookResp.findBookByName(link.html())!=null)
+			logger.debug("book列表中的book番号：{}",link.html());
+			Book book = bookResp.findBookByName(link.html());
+			if( !forceGrap && book!=null)
 				continue;
-			Book book = new Book();
+			if(book==null)
+				book = new Book();
 			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失;
 			String url = link.attr("href");
 			try {
@@ -126,6 +134,9 @@ public class EWormIndexService {
 		logger.debug("平均评分:" + doc.select("#rating_label").html());// 平均评分
 		book.setName(doc.select("#gn").html());
 		logger.debug("番号:" + doc.select("#gn").html());// 番号
+		String categoryHref = doc.select("#gdc a").attr("href");
+		book.setCategory(categoryHref.substring(categoryHref.lastIndexOf("/")+1));
+		logger.debug("分类:" + categoryHref.substring(categoryHref.lastIndexOf("/")+1));// 分类
 		Elements values = doc.select("#gdd .gdt2");
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
 		DateTime dt = fmt.parseDateTime(values.get(0).html());
