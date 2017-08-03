@@ -10,6 +10,30 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+//@SqlResultSetMapping(
+//	    name="bookScoreMapping",
+//	    classes={
+//	        @ConstructorResult(
+//	            targetClass=BookScore.class,
+//	            columns={
+//	            	@ColumnResult(name="name"),
+//	            	@ColumnResult(name="length"),
+//	            	@ColumnResult(name="ratingCount"),
+//	            	@ColumnResult(name="favourited"),
+//	            	@ColumnResult(name="averageRating"),
+//	            	/*@ColumnResult(name="eInputDate", type = Date.class),*/
+//	            	@ColumnResult(name="href"),
+//	                @ColumnResult(name="score"),
+//	            }
+//	        )
+//	    }
+//	)
+//@NamedNativeQuery(name="Book.findBookScores"
+//, query="select b.name, b.length, b.ratingCount,b.favourited,b.averageRating,b.eInputDate,b.href,s.score from book b "
+//		+ "left join score s on b.id=s.book_id "
+//		+ "left join user u on u.id=s.user_id "
+//		+ "where u.id = :userId "
+//, resultSetMapping="bookScoreMapping")
 @Entity
 @Table
 public class Book {

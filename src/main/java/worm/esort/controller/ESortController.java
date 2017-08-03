@@ -14,15 +14,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiOperation;
-import worm.esort.repository.BookRepository;
 import worm.esort.service.EWormThreadService;
 import worm.esort.service.ScoreService;
 
 @RestController
 public class ESortController {
-
-	@Autowired
-	BookRepository bookResp;
 
 	@Autowired
 	EWormThreadService eWormThreadService;
@@ -36,7 +32,7 @@ public class ESortController {
 	@RequestMapping(value = { "/getBooks" }, method = RequestMethod.GET)
 	public String getBooks() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(bookResp.findByAvailable(true));
+		return mapper.writeValueAsString(scoreService.getBookScores());
 	}
 	
 	@ApiOperation(value = "爬取book信息", notes = "发出爬取指令，慎用")
