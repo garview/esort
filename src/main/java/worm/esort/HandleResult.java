@@ -40,7 +40,7 @@ public class HandleResult {
 	 * @param pageCostTime 每页耗时（秒）
 	 */
 	public void expectRemainTime(float pageCostTime) {
-		float remainTime = ((totalPageCount - handledPages.size()) * pageCostTime);// 剩余时间（秒）
+		float remainTime = (((totalPageCount - handledPages.size())/2) * pageCostTime);// 剩余时间（秒）
 		int hours = (int) (remainTime / 3600);
 		int minutes = (int) ((remainTime % 3600f) / 60);
 		int seconds = (int) ((remainTime % 3600f) % 60);

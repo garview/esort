@@ -50,9 +50,10 @@ public class App
 	
 	@Bean
     public TaskExecutor taskExecutor() {
+		int maxThread = 2;
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(1);
-        executor.setMaxPoolSize(1);
+        executor.setCorePoolSize(maxThread);
+        executor.setMaxPoolSize(maxThread);
 //        executor.setQueueCapacity(1);
         executor.setWaitForTasksToCompleteOnShutdown(true);
         return executor;
