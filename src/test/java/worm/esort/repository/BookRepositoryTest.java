@@ -30,7 +30,7 @@ public class BookRepositoryTest {
 			logger.info(b);
 	}
 //	b.name, b.length, b.ratingCount,b.favourited,b.averageRating,b.eInputDate,b.href,s.score
-	@Test
+//	@Test
 	public void testFindBookScore() {
 		List<Object[]> result = bookResp.findBookScores(1L);
 		result.stream().forEach(obj->{
@@ -51,6 +51,11 @@ public class BookRepositoryTest {
 //			System.out.println(bs);
 		});
 		System.out.println(result.size());
+	}
+	
+	@Test
+	public void testCascadeRemove(){
+		bookResp.delete(1432l);
 	}
 
 }

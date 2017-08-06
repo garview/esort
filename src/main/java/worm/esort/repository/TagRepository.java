@@ -7,4 +7,5 @@ import worm.esort.domain.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, Long>{
 
+	Tag findTagByTagName(String tagName);
 }

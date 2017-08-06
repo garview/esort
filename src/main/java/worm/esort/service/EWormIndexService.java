@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -34,7 +36,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import worm.esort.domain.Book;
+import worm.esort.domain.Tag;
+import worm.esort.domain.TagType;
 import worm.esort.repository.BookRepository;
+import worm.esort.repository.TagRepository;
+import worm.esort.repository.TagTypeRepository;
 
 /**
  * e站索引爬虫服务，爬取书籍的基本信息。
@@ -51,7 +57,10 @@ public class EWormIndexService {
 	@Autowired
 	BookRepository bookResp;
 	
-
+	@Autowired
+	TagRepository tagRepository;
+	@Autowired
+	TagTypeRepository tagTypeRepository;
 	/**
 	 * 对查询结果所有列表进行爬取 已废弃，单线程爬取效率太低。
 	 * 
@@ -127,6 +136,8 @@ public class EWormIndexService {
 		long t1 = System.currentTimeMillis();
 		Document doc = null;
 		doc = Jsoup.connect(url).get();
+		Set<Tag> tags = handleTags(doc);
+		book.setTags(tags);
 		book.setHref(url);
 		book.setRatingCount(str2Integer(doc.select("#rating_count").html()));
 		logger.debug("评分人数:" + doc.select("#rating_count").html());// 评分人数
@@ -152,6 +163,41 @@ public class EWormIndexService {
 		long t2 = System.currentTimeMillis();
 		bookResp.save(book);
 		logger.debug("处理耗时{}秒：{} ", (t2 - t1) / 1000f, book.getName());
+	}
+	
+	/**
+	 * 保存标签和标签分类
+	 * @param bookPage
+	 * @return 标签对象集合
+	 */
+	private Set<Tag> handleTags(Document bookPage){
+		Set<Tag> tags = new HashSet<>();
+		Elements elements = bookPage.select("#taglist tr");
+		//处理tag分类
+		for(Element e : elements) {
+			String typeName = e.select(".tc").html();
+			typeName = typeName.substring(0, typeName.indexOf(":"));
+			TagType  type = tagTypeRepository.findTagTypeByTypeName(typeName);
+			if(type == null){
+				type = new TagType();
+				type.setTypeName(typeName);
+				tagTypeRepository.save(type);
+			}
+			// 处理tag
+			Elements tagNodes = e.select("td").get(1).select("div");
+			for(Element node : tagNodes){
+				String tagName = node.select("a").html();
+				Tag tag = tagRepository.findTagByTagName(tagName);
+				if(tag==null){
+					tag = new Tag();
+					tag.setTagName(tagName);
+					tag.setTagType(type);
+					tagRepository.save(tag);
+				}
+				tags.add(tag);
+			}
+		}
+		return tags;
 	}
 
 	/**

@@ -2,10 +2,15 @@ package worm.esort.domain;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -79,6 +84,14 @@ public class Book {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	@ManyToMany
+    @JoinTable(
+    		name = "book_tag"
+    		, joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+    		, inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    		)
+   private Set<Tag> tags;
 	/**
 	 * 资源是否可用
 	 */
@@ -166,6 +179,12 @@ public class Book {
 		return "Book [id=" + id + ", eInputDate=" + eInputDate + ", eInputTime=" + eInputTime + ", fileSize=" + fileSize
 				+ ", length=" + length + ", name=" + name + ", favourited=" + favourited + ", ratingCount="
 				+ ratingCount + ", averageRating=" + averageRating + ", href=" + href + "]";
+	}
+	public Set<Tag> getTags() {
+		return tags;
+	}
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
 	}
 	
 	
