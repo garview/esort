@@ -22,7 +22,7 @@ public class ProxyPool {
 		return pool.get(current++);
 	}
 	
-	public void initPool() {
+	private void initPool() {
 		this.current = 0;
 		this.pool = proxyResp.findByStatusLessThan(ProxyInfo.WORST);
 	}

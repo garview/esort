@@ -26,14 +26,6 @@ public class CheckProxyThread extends Thread {
 		this.proxy = proxy;
 	}
 
-	public ProxyInfo getProxy() {
-		return proxy;
-	}
-
-	public void setProxy(ProxyInfo proxy) {
-		this.proxy = proxy;
-	}
-
 	@Override
 	public void run() {
 		System.setProperty("proxySet", "true");

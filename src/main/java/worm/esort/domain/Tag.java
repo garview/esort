@@ -2,6 +2,7 @@ package worm.esort.domain;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ public class Tag {
 	@GenericGenerator(name="increment", strategy = "increment")
 	private Long id;
 	
+	@Column(unique=true)
 	private String tagName;
 	
 	@ManyToMany(mappedBy="tags")

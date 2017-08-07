@@ -36,7 +36,7 @@ public class ProxyService {
 	 */
 	public void supplyProxyData() throws IOException{
 		List<ProxyInfo> proxies = new ArrayList<>();
-		String url = "http://www.xicidaili.com/nt";
+		String url = "http://www.xicidaili.com/nn/";
 		Document doc = Jsoup.connect(url).get();
 		Elements list = doc.select("#ip_list tr");
 		logger.info("从{}获取到{}个代理地址",url,list.size()-1);

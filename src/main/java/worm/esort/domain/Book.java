@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -67,6 +67,7 @@ public class Book {
 	/**
 	 * 番号
 	 */
+	@Column(unique=true)
 	private String name;
 	/**
 	 * 添加收藏的人数
