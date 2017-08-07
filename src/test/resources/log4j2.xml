@@ -40,8 +40,6 @@
 		</Logger>
 		<Root level="error">
 			<AppenderRef ref="Console" />
-			<AppenderRef ref="debug-log" />
-			<AppenderRef ref="error-log" />
 		</Root>
 	</Loggers>
 </Configuration>

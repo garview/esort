@@ -40,20 +40,22 @@ public class WormThread extends Thread {
 
 	@Override
 	public void run() {
-		ProxyInfo proxy = pool.getProxy();
-		System.setProperty("proxySet", "true");
-		System.setProperty("http.proxyHost", proxy.getIp());
-		System.setProperty("http.proxyPort", proxy.getPort());
-		logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(), proxy.getPort());
 		float costTime = 0;
-		try {
+		try{
+			ProxyInfo proxy = pool.getProxy();
+			System.setProperty("proxySet", "true");
+			System.setProperty("http.proxyHost", proxy.getIp());
+			System.setProperty("http.proxyPort", proxy.getPort());
+			logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(), proxy.getPort());
 			costTime = eWormIndexService.crawlListPage(url);
+			App.result.expectRemainTime(costTime);
 		} catch (IOException e) {
 			logger.error("连接异常：" + url, e);
-		} finally {
+		}catch(Exception e){
+			logger.error(e);
+		}finally {
 			synchronized (App.result) {
 				App.result.addHandledPage(pageCount + 1);
-				App.result.expectRemainTime(costTime);
 			}
 		}
 	}
