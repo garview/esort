@@ -109,8 +109,10 @@ public class EWormIndexService {
 		for (Element link : links) {
 			logger.debug("book列表中的book番号：{}",link.html());
 			Book book = bookResp.findBookByName(link.html());
-			if( !forceGrap && book!=null)
+			if( !forceGrap && book!=null){
+				logger.info("该番已存在，不抓取："+link.html());
 				continue;
+			}
 			if(book==null)
 				book = new Book();
 			book.setName(link.html());// 先传入本子名字信息，防止由于链接失效导致的数据记录丢失;

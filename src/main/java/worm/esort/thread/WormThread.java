@@ -52,7 +52,7 @@ public class WormThread extends Thread {
 		} catch (IOException e) {
 			logger.error("连接异常：" + url, e);
 		}catch(Exception e){
-			logger.error(e);
+			logger.error("未知异常",e);
 		}finally {
 			synchronized (App.result) {
 				App.result.addHandledPage(pageCount + 1);
