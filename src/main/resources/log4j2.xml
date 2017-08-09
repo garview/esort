@@ -17,7 +17,17 @@
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
-
+		</RollingFile>
+		<RollingFile name="info-log" fileName="${log-path}/info.log"
+			filePattern="${log-path}/info-%d{yyyy-MM-dd}.log">
+			<!-- log pattern -->
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
 		</RollingFile>
 		<RollingFile name="error-log" fileName="${log-path}/error.log"
 			filePattern="${log-path}/error-%d{yyyy-MM-dd}.log">
@@ -35,7 +45,7 @@
 	<Loggers>
 		<Logger name="worm.esort"  level="debug" additivity="false" >
 			<AppenderRef ref="Console" level="info" />
-			<AppenderRef ref="debug-log" level="debug" />
+			<AppenderRef ref="info-log" level="info" />
 			<AppenderRef ref="error-log" level="error" />
 		</Logger>
 		<Root level="error">

@@ -107,7 +107,7 @@ public class EWormIndexService {
 	public void crawlListPage(Document doc) {
 		Elements links = doc.select("a[onmouseover]");
 		for (Element link : links) {
-			logger.debug("book列表中的book番号：{}",link.html());
+			logger.info("===========开始处理：{}================",link.html());
 			Book book = bookResp.findBookByName(link.html());
 			if( !forceGrap && book!=null){
 				logger.info("该番已存在，不抓取："+link.html());
@@ -134,7 +134,6 @@ public class EWormIndexService {
 	 * @throws IOException
 	 */
 	public void crawlBook(String url, Book book) throws IOException {
-		logger.debug("===========开始处理：{}================", book.getName());
 		long t1 = System.currentTimeMillis();
 		Document doc = null;
 		doc = Jsoup.connect(url).get();
@@ -164,7 +163,7 @@ public class EWormIndexService {
 		logger.debug("收藏数:" + values.get(6).html());
 		long t2 = System.currentTimeMillis();
 		bookResp.save(book);
-		logger.debug("处理耗时{}秒：{} ", (t2 - t1) / 1000f, book.getName());
+		logger.info("处理耗时{}秒：{} ", (t2 - t1) / 1000f, book.getName());
 	}
 	
 	/**
