@@ -67,7 +67,7 @@ public class Book {
 	/**
 	 * 番号
 	 */
-	@Column(unique=true)
+	@Column(unique=true,length=300)
 	private String name;
 	/**
 	 * 添加收藏的人数

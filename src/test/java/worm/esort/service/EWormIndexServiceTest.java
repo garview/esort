@@ -51,7 +51,7 @@ public class EWormIndexServiceTest {
 	@Test
 	@Rollback(false)
 	public void testCrawlBook() throws IOException {
-		String url = "https://e-hentai.org/g/1086305/4d5acc0a41/?nw=session";
+		String url = "https://e-hentai.org/g/1038930/a6b3eb9089/";
 		Document doc = Jsoup.connect(url).get();
 		String bookName = doc.select("#gn").html();
 		Book b = bookResp.findBookByName(bookName);
