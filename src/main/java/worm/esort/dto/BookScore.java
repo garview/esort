@@ -15,6 +15,7 @@ public class BookScore {
 	private Integer ratingCount;
 
 	private Float averageRating;
+	private String category;
 
 	private String href;
 	private Date eInputDate;
@@ -128,6 +129,14 @@ public class BookScore {
 
 	public void setBookId(long bookId) {
 		this.bookId = bookId;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

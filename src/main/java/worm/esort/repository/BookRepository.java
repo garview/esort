@@ -19,7 +19,7 @@ public interface BookRepository extends CrudRepository<Book, Long>{
 	 * @param userId
 	 * @return
 	 */
-	@Query(value="select b.name, b.length, b.ratingCount,b.favourited,b.averageRating,b.eInputDate,b.href,s.score,b.id from book b "
+	@Query(value="select b.name, b.length, b.ratingCount,b.favourited,b.averageRating,b.eInputDate,b.href,s.score,b.id,b.category from book b "
 			+ "left join score s on b.id=s.book_id "
 			+ "left join user u on u.id=s.user_id "
 			+ "where (u.id = :userId or u.id is null) and b.available=true ", nativeQuery = true)

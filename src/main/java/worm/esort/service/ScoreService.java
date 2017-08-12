@@ -58,6 +58,7 @@ public class ScoreService {
 			if(obj[7]!=null)
 				bs.setScore((Float) obj[7]);
 			bs.setBookId(Long.valueOf(obj[8].toString()));
+			bs.setCategory(obj[9].toString());
 			newResult.add(bs);
 		});
 		return newResult;

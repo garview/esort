@@ -27,9 +27,10 @@ public class WormThread extends Thread {
 	@Autowired
 	ProxyPool pool;
 
-	public WormThread(String searchResultUrl) {
+	public WormThread(String searchResultUrl, WormLock wormLock) {
 		super();
 		this.url = searchResultUrl;
+		this.wormLock = wormLock;
 	}
 
 	public WormThread(String searchResultUrl, int pageCount, WormLock wormLock) {

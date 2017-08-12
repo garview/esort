@@ -51,7 +51,7 @@ public class EWormThreadService {
 		int totalPageCount = new Integer(pageLinks.get(pageLinks.size() - 2).html());// 总页数
 		App.result.setTotalPageCount(totalPageCount);
 		// crawlListPage(page1);
-		taskExecutor.execute((WormThread) ctx.getBean("wormThread", searchResultUrl));// 由于url规则与其余页不一样，所以第一页在循环外处理
+		taskExecutor.execute((WormThread) ctx.getBean("wormThread", searchResultUrl,wormLock));// 由于url规则与其余页不一样，所以第一页在循环外处理
 		for (int i = 1; i <= totalPageCount - 1; i++) {
 			taskExecutor.execute((WormThread) ctx.getBean("wormThread", searchResultUrl, i,wormLock));
 		}
