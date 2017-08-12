@@ -19,6 +19,7 @@ public class WormThread extends Thread {
 	private static final Logger logger = LogManager.getLogger();
 	private String url;
 	private int pageCount;
+	private WormLock wormLock;
 
 	@Autowired
 	EWormIndexService eWormIndexService;
@@ -31,29 +32,41 @@ public class WormThread extends Thread {
 		this.url = searchResultUrl;
 	}
 
-	public WormThread(String searchResultUrl, int pageCount) {
+	public WormThread(String searchResultUrl, int pageCount, WormLock wormLock) {
 		super();
 		String pageUrl = new String(searchResultUrl + "&page=" + pageCount); // i=1开始，表示从第二页开始循环
 		this.pageCount = pageCount;
 		this.url = pageUrl;
+		this.wormLock = wormLock;
 	}
 
 	@Override
 	public void run() {
+
+		try {
+			synchronized (wormLock) {
+				if (wormLock.isShouldPause())
+					wormLock.wait();
+			}
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		float costTime = 0;
-		try{
+		try {
 			ProxyInfo proxy = pool.getProxy();
 			System.setProperty("proxySet", "true");
 			System.setProperty("http.proxyHost", proxy.getIp());
 			System.setProperty("http.proxyPort", proxy.getPort());
-			logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(), proxy.getPort());
+			logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(),
+					proxy.getPort());
 			costTime = eWormIndexService.crawlListPage(url);
 			App.result.expectRemainTime(costTime);
 		} catch (IOException e) {
 			logger.error("连接异常：" + url, e);
-		}catch(Exception e){
-			logger.error("未知异常",e);
-		}finally {
+		} catch (Exception e) {
+			logger.error("未知异常", e);
+		} finally {
 			synchronized (App.result) {
 				App.result.addHandledPage(pageCount + 1);
 			}

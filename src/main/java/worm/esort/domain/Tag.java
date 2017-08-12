@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,6 +24,10 @@ public class Tag {
 	
 	@Column(unique=true)
 	private String tagName;
+	
+	@Version
+	@Column(name="OPTLOCK" , columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Integer version = 0;
 	
 	@ManyToMany(mappedBy="tags")
 	private Set<Book> books;
@@ -62,6 +67,13 @@ public class Tag {
 	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
-	
-	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 }

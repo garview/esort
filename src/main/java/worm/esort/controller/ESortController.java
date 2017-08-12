@@ -25,6 +25,8 @@ public class ESortController {
 	
 	@Autowired
 	ScoreService scoreService;
+	
+	
 
 	// @RequestMapping("/getBooks")
 	// @ResponseBody
@@ -34,12 +36,25 @@ public class ESortController {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(scoreService.getBookScores());
 	}
+	@ApiOperation(value = "pauseWorms", notes = "暂停所有爬虫")
+	@RequestMapping(value = { "/pauseWorms" }, method = RequestMethod.GET)
+	public ResponseEntity<String> pauseWorm() throws JsonProcessingException {
+		eWormThreadService.pauseAllWormThread();
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+	}
+	
+	@ApiOperation(value = "notifyWorms", notes = "唤醒所有爬虫")
+	@RequestMapping(value = { "/notifyWorms" }, method = RequestMethod.GET)
+	public ResponseEntity<String> notifyWorms() throws JsonProcessingException {
+		eWormThreadService.restartAllWormThread();
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+	}
 	
 	@ApiOperation(value = "爬取book信息", notes = "发出爬取指令，慎用")
 	@RequestMapping(value = { "/collectBooks" }, method = RequestMethod.GET)
 	public ResponseEntity<String> collectBooks() throws IOException {
 		eWormThreadService.collectBooks();
-		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
 	
 	@RequestMapping(value = { "/rateBook" }, method = RequestMethod.PUT)
@@ -47,4 +62,6 @@ public class ESortController {
 		scoreService.giveMark(1L, bookId, score);
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
+	
+	
 }

@@ -10,6 +10,6 @@ import worm.esort.domain.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, Long>{
 
-	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Lock(LockModeType.WRITE)
 	Tag findTagByTagName(String tagName);
 }
