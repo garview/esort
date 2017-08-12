@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -86,7 +87,7 @@ public class Book {
 		this.category = category;
 	}
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
     		name = "book_tag"
     		, joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")

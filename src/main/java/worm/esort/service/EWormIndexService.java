@@ -182,7 +182,7 @@ public class EWormIndexService {
 			if(type == null){
 				type = new TagType();
 				type.setTypeName(typeName);
-				tagTypeRepository.save(type);
+//				tagTypeRepository.save(type);
 			}
 			// 处理tag
 			Elements tagNodes = e.select("td").get(1).select("div");
@@ -193,7 +193,7 @@ public class EWormIndexService {
 					tag = new Tag();
 					tag.setTagName(tagName);
 					tag.setTagType(type);
-					tagRepository.save(tag);
+//					tagRepository.save(tag);
 				}
 				tags.add(tag);
 			}
