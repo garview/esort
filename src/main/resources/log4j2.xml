@@ -43,9 +43,11 @@
 		</RollingFile>
 	</Appenders>
 	<Loggers>
+		<Logger name="org.hibernate.SQL" level="debug"/>
 		<Logger name="worm.esort"  level="debug" additivity="false" >
 			<AppenderRef ref="Console" level="info" />
-			<AppenderRef ref="info-log" level="info" />
+			<!-- <AppenderRef ref="info-log" level="info" /> -->
+			<AppenderRef ref="debug-log" level="debug" />
 			<AppenderRef ref="error-log" level="error" />
 		</Logger>
 		<Root level="error">

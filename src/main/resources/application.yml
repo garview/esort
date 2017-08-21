@@ -1,5 +1,7 @@
 # config context path to "/" by setting an empty string
 
+server:
+  port: 8081
 # JACKSON
 spring:
   datasource:

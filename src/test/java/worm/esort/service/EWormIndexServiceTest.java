@@ -48,7 +48,7 @@ public class EWormIndexServiceTest {
 		}
 	 }
 	
-	@Test
+//	@Test
 	@Rollback(false)
 	public void testCrawlBook() throws IOException {
 		String url = "https://e-hentai.org/g/1046588/81fdb4ddab/";

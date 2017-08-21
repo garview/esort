@@ -56,13 +56,24 @@ public class IPProxyTest {
 		});
 	}
 	
-	@Test
+//	@Test
 	public void testProxy() throws IOException{
 		System.setProperty("proxySet", "true");
 		 System.setProperty("http.proxyHost", "222.52.142.242");
 		 System.setProperty("http.proxyPort", "8080");
 		 long t1 = System.currentTimeMillis();
 			Document doc = Jsoup.connect("http://www.baidu.com").get();
+			long t2 = System.currentTimeMillis();
+			System.out.println((t2-t1)/1000f+"秒");
+	}
+	
+//	@Test
+	public void testAnoIP() throws IOException{
+		System.setProperty("proxySet", "true");
+		 System.setProperty("http.proxyHost", "175.42.102.252");
+		 System.setProperty("http.proxyPort", "8118");
+		 long t1 = System.currentTimeMillis();
+			Document doc = Jsoup.connect("http://localhost:8080/test").get();
 			long t2 = System.currentTimeMillis();
 			System.out.println((t2-t1)/1000f+"秒");
 	}

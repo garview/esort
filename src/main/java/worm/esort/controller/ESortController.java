@@ -2,6 +2,8 @@ package worm.esort.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,5 +65,13 @@ public class ESortController {
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 	
-	
+	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
+	public ResponseEntity<String> test(HttpServletRequest request) throws JsonProcessingException {
+//		scoreService.giveMark(1L, bookId, score);
+		String ip1 = request.getRemoteAddr();
+		String ip2 = request.getHeader("x-forwarded-for");
+		String ip3 = request.getHeader("WL-Proxy-Client-IP");
+		String ip4 = request.getRemoteHost();
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+	}
 }

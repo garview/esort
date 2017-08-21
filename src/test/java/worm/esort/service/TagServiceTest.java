@@ -29,7 +29,7 @@ public class TagServiceTest {
 	@Autowired
 	TagTypeRepository tagTypeRepository;
 
-	@Test
+//	@Test
 	public void testTagFlow() throws IOException{
 		String url = "https://e-hentai.org/g/1027032/d5a8ab0015/";
 		Document doc = Jsoup.connect(url).get();

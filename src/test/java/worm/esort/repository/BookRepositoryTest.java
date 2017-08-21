@@ -53,7 +53,7 @@ public class BookRepositoryTest {
 		System.out.println(result.size());
 	}
 	
-	@Test
+//	@Test
 	public void testCascadeRemove(){
 		bookResp.delete(1432l);
 	}
