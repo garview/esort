@@ -1,7 +1,7 @@
 # config context path to "/" by setting an empty string
 
-server:
-  port: 8081
+#server:
+#  port: 8081
 # JACKSON
 spring:
   datasource:
@@ -13,8 +13,8 @@ spring:
     show-sql: true
     hibernate: 
       ddl-auto: update
-      naming: 
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#      naming: 
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         
 
 esort:

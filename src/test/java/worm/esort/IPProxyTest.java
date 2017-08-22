@@ -67,13 +67,13 @@ public class IPProxyTest {
 			System.out.println((t2-t1)/1000f+"秒");
 	}
 	
-//	@Test
+	@Test
 	public void testAnoIP() throws IOException{
 		System.setProperty("proxySet", "true");
-		 System.setProperty("http.proxyHost", "175.42.102.252");
-		 System.setProperty("http.proxyPort", "8118");
+		 System.setProperty("http.proxyHost", "60.255.186.169");
+		 System.setProperty("http.proxyPort", "8888");
 		 long t1 = System.currentTimeMillis();
-			Document doc = Jsoup.connect("http://localhost:8080/test").get();
+			Document doc = Jsoup.connect("http://52.221.203.10:8081/test").get();
 			long t2 = System.currentTimeMillis();
 			System.out.println((t2-t1)/1000f+"秒");
 	}

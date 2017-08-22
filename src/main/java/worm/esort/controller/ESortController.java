@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import worm.esort.service.ScoreService;
 
 @RestController
 public class ESortController {
+	public static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	EWormThreadService eWormThreadService;
@@ -68,10 +71,10 @@ public class ESortController {
 	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
 	public ResponseEntity<String> test(HttpServletRequest request) throws JsonProcessingException {
 //		scoreService.giveMark(1L, bookId, score);
-		String ip1 = request.getRemoteAddr();
-		String ip2 = request.getHeader("x-forwarded-for");
-		String ip3 = request.getHeader("WL-Proxy-Client-IP");
-		String ip4 = request.getRemoteHost();
+		logger.info("request.getRemoteAddr:{}",request.getRemoteAddr());
+		logger.info("request.getHeader(x-forwarded-for):{}",request.getHeader("x-forwarded-for"));
+		logger.info("request.getHeader(WL-Proxy-Client-IP):{}",request.getHeader("WL-Proxy-Client-IP"));
+		logger.info("request.getRemoteHost:{}",request.getRemoteHost());
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 }
