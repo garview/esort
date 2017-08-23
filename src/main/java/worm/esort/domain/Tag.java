@@ -16,7 +16,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table
+@Table(name="tag")
 public class Tag {
 	@Id
 	@GeneratedValue(generator="increment")
@@ -35,13 +35,13 @@ public class Tag {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="type_id")
-	private TagType tagType;
+	private Tagtype tagType;
 
-	public TagType getTagType() {
+	public Tagtype getTagType() {
 		return tagType;
 	}
 
-	public void setTagType(TagType tagType) {
+	public void setTagType(Tagtype tagType) {
 		this.tagType = tagType;
 	}
 

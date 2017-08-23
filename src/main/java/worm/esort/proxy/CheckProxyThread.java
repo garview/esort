@@ -19,9 +19,9 @@ public class CheckProxyThread extends Thread {
 	@Autowired
 	ProxyInfoRepository proxyResp;
 
-	private ProxyInfo proxy;
+	private Proxyinfo proxy;
 
-	public CheckProxyThread(ProxyInfo proxy) {
+	public CheckProxyThread(Proxyinfo proxy) {
 		super();
 		this.proxy = proxy;
 	}

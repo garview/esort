@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import worm.esort.domain.Tag;
-import worm.esort.domain.TagType;
+import worm.esort.domain.Tagtype;
 import worm.esort.repository.TagRepository;
 import worm.esort.repository.TagTypeRepository;
 
@@ -38,9 +38,9 @@ public class TagServiceTest {
 		for(Element e : elements) {
 			String typeName = e.select(".tc").html();
 			typeName = typeName.substring(0, typeName.indexOf(":")-2);
-			TagType  type = tagTypeRepository.findTagTypeByTypeName(typeName);
+			Tagtype  type = tagTypeRepository.findTagTypeByTypeName(typeName);
 			if(type == null){
-				type = new TagType();
+				type = new Tagtype();
 				type.setTypeName(typeName);
 				tagTypeRepository.save(type);
 			}

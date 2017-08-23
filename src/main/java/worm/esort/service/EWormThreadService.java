@@ -30,7 +30,7 @@ import worm.esort.thread.WormThread;
 @Transactional
 public class EWormThreadService {
 
-	private static final Logger logger = LogManager.getLogger();
+//	private static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	BookRepository bookResp;
@@ -55,7 +55,7 @@ public class EWormThreadService {
 		for (int i = 1; i <= totalPageCount - 1; i++) {
 			taskExecutor.execute((WormThread) ctx.getBean("wormThread", searchResultUrl, i,wormLock));
 		}
-		taskExecutor.shutdown();
+//		taskExecutor.shutdown();
 	}
 	
 	public void pauseAllWormThread(){

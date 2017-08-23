@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  */
 @Entity
-@Table
+@Table(name="user")
 public class User {
 
 	private Long id;

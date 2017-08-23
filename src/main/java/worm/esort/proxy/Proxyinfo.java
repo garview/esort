@@ -5,11 +5,13 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class ProxyInfo {
+@Table(name="proxyinfo")
+public class Proxyinfo {
 	public static final int GOOD = 1;
 	public static final int NORMAL = 2;
 	public static final int BAD = 3;

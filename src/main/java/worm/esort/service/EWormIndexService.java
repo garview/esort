@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 
 import worm.esort.domain.Book;
 import worm.esort.domain.Tag;
-import worm.esort.domain.TagType;
+import worm.esort.domain.Tagtype;
 import worm.esort.repository.BookRepository;
 import worm.esort.repository.TagRepository;
 import worm.esort.repository.TagTypeRepository;
@@ -91,9 +91,9 @@ public class EWormIndexService {
 	 * @param url
 	 * @throws IOException
 	 */
-	public float crawlListPage(String url) throws IOException {
+	public float crawlListPage(String url) throws IOException{
 		long t1 = System.currentTimeMillis();
-		Document doc = Jsoup.connect(url).get();
+		Document doc = Jsoup.connect(url).timeout(5000).get();
 		crawlListPage(doc);
 		long t2 = System.currentTimeMillis();
 		logger.info("本页耗时{}秒:{}", (t2 - t1) / 1000f, url); // 平均处理1页30s左右
@@ -178,9 +178,9 @@ public class EWormIndexService {
 		for(Element e : elements) {
 			String typeName = e.select(".tc").html();
 			typeName = typeName.substring(0, typeName.indexOf(":"));
-			TagType  type = tagTypeRepository.findTagTypeByTypeName(typeName);
+			Tagtype  type = tagTypeRepository.findTagTypeByTypeName(typeName);
 			if(type == null){
-				type = new TagType();
+				type = new Tagtype();
 				type.setTypeName(typeName);
 //				tagTypeRepository.save(type);
 			}

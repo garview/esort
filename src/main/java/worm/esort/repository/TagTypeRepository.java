@@ -2,10 +2,10 @@ package worm.esort.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import worm.esort.domain.TagType;
+import worm.esort.domain.Tagtype;
 
 
-public interface TagTypeRepository extends CrudRepository<TagType, Long>{
+public interface TagTypeRepository extends CrudRepository<Tagtype, Long>{
 
-	TagType findTagTypeByTypeName(String typeName);
+	Tagtype findTagTypeByTypeName(String typeName);
 }

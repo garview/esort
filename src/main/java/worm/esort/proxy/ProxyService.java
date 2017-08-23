@@ -26,7 +26,7 @@ public class ProxyService {
 	@Autowired
 	private ApplicationContext ctx;
 	
-	public Iterable<ProxyInfo> findProxies(){
+	public Iterable<Proxyinfo> findProxies(){
 		return proxyResp.findAll();
 	}
 	
@@ -35,7 +35,7 @@ public class ProxyService {
 	 * @throws IOException
 	 */
 	public void supplyProxyData() throws IOException{
-		List<ProxyInfo> proxies = new ArrayList<>();
+		List<Proxyinfo> proxies = new ArrayList<>();
 		String url = "http://www.xicidaili.com/nn/";
 		Document doc = Jsoup.connect(url).get();
 		Elements list = doc.select("#ip_list tr");
@@ -43,10 +43,10 @@ public class ProxyService {
 		for(int i=1; i<list.size(); i++){
 			Element row = list.get(i);
 			Elements tds = row.select("td");
-			ProxyInfo p = new ProxyInfo();
+			Proxyinfo p = new Proxyinfo();
 			p.setIp(tds.get(1).html());
 			p.setPort(tds.get(2).html());
-			ProxyInfo temp = proxyResp.findProxyInfoByIpAndPort(p.getIp(), p.getPort());
+			Proxyinfo temp = proxyResp.findProxyInfoByIpAndPort(p.getIp(), p.getPort());
 			if(temp!=null)
 				p = temp;
 			p.setServerLocation(tds.get(3).select("a").html());
@@ -57,7 +57,7 @@ public class ProxyService {
 		checkProxies(proxies);
 	}
 
-	private void checkProxies(List<ProxyInfo> proxies) {
+	private void checkProxies(List<Proxyinfo> proxies) {
 		proxies.stream().forEach(proxy->{
 			Thread t = (Thread) ctx.getBean("checkProxyThread",proxy);
 			t.start();

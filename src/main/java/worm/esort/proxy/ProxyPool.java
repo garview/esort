@@ -11,10 +11,10 @@ public class ProxyPool {
 	@Autowired
 	ProxyInfoRepository proxyResp;
 	
-	private List<ProxyInfo> pool ;
+	private List<Proxyinfo> pool ;
 	private int current;
 	
-	public synchronized ProxyInfo getProxy(){
+	public synchronized Proxyinfo getProxy(){
 		if(pool==null)
 			initPool();
 		if(current==pool.size())
@@ -24,6 +24,6 @@ public class ProxyPool {
 	
 	private void initPool() {
 		this.current = 0;
-		this.pool = proxyResp.findByStatusLessThan(ProxyInfo.WORST);
+		this.pool = proxyResp.findByStatusLessThan(Proxyinfo.WORST);
 	}
 }

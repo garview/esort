@@ -12,7 +12,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import worm.esort.proxy.ProxyInfo;
+import worm.esort.proxy.Proxyinfo;
 
 
 
@@ -20,7 +20,7 @@ public class IPProxyTest {
 	private static final Logger logger = LogManager.getLogger();
 //	@Test
 	public void testIP() throws IOException{
-		List<ProxyInfo> proxies = new ArrayList<>();
+		List<Proxyinfo> proxies = new ArrayList<>();
 		String url = "http://www.xicidaili.com/nt";
 		Document doc = Jsoup.connect(url).get();
 //		System.out.println(doc.toString());
@@ -28,7 +28,7 @@ public class IPProxyTest {
 		for(int i=1; i<list.size(); i++){
 			Element row = list.get(i);
 			Elements tds = row.select("td");
-			ProxyInfo p = new ProxyInfo();
+			Proxyinfo p = new Proxyinfo();
 			p.setIp(tds.get(1).html());
 			p.setPort(tds.get(2).html());
 			p.setServerLocation(tds.get(3).select("a").html());
@@ -38,7 +38,7 @@ public class IPProxyTest {
 		testProxy(proxies);
 	}
 	
-	public void testProxy(List<ProxyInfo> proxies){
+	public void testProxy(List<Proxyinfo> proxies){
 		System.setProperty("proxySet", "true");
 		proxies.stream().forEach(proxy->{
 			 System.setProperty("http.proxyHost", proxy.getIp());
@@ -67,7 +67,7 @@ public class IPProxyTest {
 			System.out.println((t2-t1)/1000f+"秒");
 	}
 	
-	@Test
+//	@Test
 	public void testAnoIP() throws IOException{
 		System.setProperty("proxySet", "true");
 		 System.setProperty("http.proxyHost", "60.255.186.169");
@@ -75,6 +75,17 @@ public class IPProxyTest {
 		 long t1 = System.currentTimeMillis();
 			Document doc = Jsoup.connect("http://52.221.203.10:8081/test").get();
 			long t2 = System.currentTimeMillis();
+			System.out.println((t2-t1)/1000f+"秒");
+	}
+	@Test
+	public void testTimeout() throws IOException {
+		System.setProperty("proxySet", "true");
+		 System.setProperty("http.proxyHost", "222.52.142.242");
+		 System.setProperty("http.proxyPort", "8080");
+		 long t1 = System.currentTimeMillis();
+			Document doc = Jsoup.connect("http://www.baidu.com").get();
+			long t2 = System.currentTimeMillis();
+			System.out.println(doc);
 			System.out.println((t2-t1)/1000f+"秒");
 	}
 }

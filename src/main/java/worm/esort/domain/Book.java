@@ -41,7 +41,7 @@ import org.hibernate.annotations.GenericGenerator;
 //		+ "where u.id = :userId "
 //, resultSetMapping="bookScoreMapping")
 @Entity
-@Table
+@Table(name="book")
 public class Book {
 
 	@Id

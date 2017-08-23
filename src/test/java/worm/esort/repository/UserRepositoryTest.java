@@ -15,7 +15,7 @@ public class UserRepositoryTest {
 	@Autowired
 	UserRepository userResp;
 	
-//	@Test
+	@Test
 	public void testFlow() {
 		User u = new User();
 		u.setUsername("admin");

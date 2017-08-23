@@ -1,6 +1,7 @@
 package worm.esort.thread;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import worm.esort.App;
-import worm.esort.proxy.ProxyInfo;
+import worm.esort.proxy.Proxyinfo;
 import worm.esort.proxy.ProxyPool;
 import worm.esort.service.EWormIndexService;
 
@@ -43,28 +44,39 @@ public class WormThread extends Thread {
 
 	@Override
 	public void run() {
-
+		// 线程暂停/继续的控制代码
 		try {
 			synchronized (wormLock) {
 				if (wormLock.isShouldPause())
 					wormLock.wait();
 			}
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		float costTime = 0;
 		try {
-			ProxyInfo proxy = pool.getProxy();
-			System.setProperty("proxySet", "true");
-			System.setProperty("http.proxyHost", proxy.getIp());
-			System.setProperty("http.proxyPort", proxy.getPort());
-			logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(),
-					proxy.getPort());
-			costTime = eWormIndexService.crawlListPage(url);
-			App.result.expectRemainTime(costTime);
-		} catch (IOException e) {
-			logger.error("连接异常：" + url, e);
+			// 由于代理ip不稳定，若发生超时链接，则更换ip继续爬数据
+			boolean swtichIP = false;
+			int tryCount = 0;
+			do {
+				Proxyinfo proxy = pool.getProxy();
+				System.setProperty("proxySet", "true");
+				System.setProperty("http.proxyHost", proxy.getIp());
+				System.setProperty("http.proxyPort", proxy.getPort());
+				logger.info("线程：{} 开始处理第{}页,代理地址：{}:{}——————————", this.getName(), this.pageCount + 1, proxy.getIp(),
+						proxy.getPort());
+				try {
+					costTime = eWormIndexService.crawlListPage(url);
+				} catch (SocketTimeoutException e) {
+					logger.error("连接超时:{}:{}", proxy.getIp(), proxy.getPort());
+					swtichIP = true;
+				}
+				App.result.expectRemainTime(costTime);
+				// 最多换10次ip，还不行就放弃。
+				if (tryCount++ > 10)
+					swtichIP = false;
+			} while (swtichIP);
+
 		} catch (Exception e) {
 			logger.error("未知异常", e);
 		} finally {
